@@ -21,7 +21,13 @@ def main():
     cfg = parse_args()
 
     # Select device
-    device = torch.device('cuda' if torch.cuda.is_available() and cfg.device == 'auto' else cfg.device)
+    if cfg.device == 'auto':
+        device = torch.device(
+            'cuda' if torch.cuda.is_available() else 'cpu'
+        )
+    else:
+        device = torch.device(cfg.device)
+
     print(f" Using device: {device}")
 
     # Prepare dataloaders
